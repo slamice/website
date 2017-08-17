@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Issam">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+<link href='/assets/stylesheets/bootstrap.min-88238289010db19359d2181e634e95cd.css' type='text/css' rel='stylesheet' media='all' />
+<link href='/assets/stylesheets/style-e81fa375b231bedf6cb2dbc6653570cc.css' type='text/css' rel='stylesheet' media='all' />
+<link href='/assets/stylesheets/google_prettify/sons-of-obsidian-afb0925bfa2d994f17dab93e13fbf999.css' type='text/css' rel='stylesheet' media='all' />
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">FeverOfTime</a>
+          <ul class="nav">
+              
+                <li><a href="/about">._.</a></li>
+              
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        <div class="row-fluid">
+  <div class="span12">
+      <div class="pages">
+        <h3 class="title"><a href="/pages/about">._.</a> <span class="date"></span></h3>
+
+        <div class="summary">
+<p>
+ Father. Husband. Developer. Musician. Tech Support. 
+</p>
+
+<p>
+Currently dorking @ <a href="http://www.gengo.com">Gengo</a>.
+</p>
+
+<p></p>
+    <a href="https://www.github.com/slamice">
+      <img src="/assets/media/github.png" alt="Github">
+    </a>
+    <a href="https://www.linkedin.com/in/issamzeibak">
+      <img src="/assets/media/linkedin.png" alt="Linkedin">
+    </a>
+    <a href="https://twitter.com/susnote">
+      <img src="/assets/media/twitter.png" alt="Twitter">
+    </a>
+
+</div>
+
+        <div class="more">
+          <a href="/pages/about" class="btn btn-small">read more..</a>
+        </div>
+      </div>
+      <div class="pages">
+        <h3 class="title"><a href="/pages/archive">Archive</a> <span class="date"></span></h3>
+
+        <div class="summary">  <h2>2015</h2>
+    <h3>February</h3>
+    <ul>
+      <li>
+<span>2015-02-23</span> » <a href="/testing-with-mock-in-python">Testing with mock in Python</a>
+</li>
+      <li>
+<span>2015-02-04</span> » <a href="/php-iii-php-s-infernal-internal-">PHP III (PHP's Infernal Internal Index)</a>
+</li>
+    </ul>
+    <h3>January</h3>
+    <ul>
+      <li>
+<span>2015-01-19</span> » <a href="/but-not-simpler">But Not Simpler</a>
+</li>
+    </ul>
+</div>
+
+        <div class="more">
+          <a href="/pages/archive" class="btn btn-small">read more..</a>
+        </div>
+      </div>
+      <div class="pages">
+        <h3 class="title"><a href="/pages">Home</a> <span class="date"></span></h3>
+
+        <div class="summary ellipsis">
+<p>Mocking is pretty awesome in python, especially when using the <a href="http://www.voidspace.org.uk/python/mock/">Mock</a> library. It simplifies making stubs when testing, covers partial mocking, setting custom return values, how they were called, etc.</p>
+
+<p>However there are a few pitfalls when initially working with Mock. Some of these things are pretty obvious, but this is a quick reference for a few gotchas I found while mocking a few projects.</p>
+
+<h5 id="toc_0">
+<em>side_effect</em> vs <em>return_value</em>:</h5>
+
+<p>You'd only use <code>side_effect</code> if you want to test something that happens in a function instead of a return value. For example if you want to test exceptions that are raised in a method, use <code>side_effect</code>:</p>
+
+<pre><code>dork_mock = mock.Mock()
+dork_mock.some_method.side_effect = ZeroDivisionError
+dork_mock.some_method()
+
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+  File "build/bdist.linux-x86_64/egg/mock.py", line 955, in __call__
+  File "build/bdist.linux-x86_64/egg/mock.py", line 1010, in _mock_call
+ZeroDivisionError
+</code></pre>
+
+<h5 id="toc_1">When to use Mock vs. MagicMock</h5>
+
+<p>Basically with <a href="http://www.voidspace.org.uk/python/mock/magicmock.html#mock.MagicMock">MagicMock</a> you can mock magic methods. That's pretty much the only difference, otherwise you should use <code>Mock</code>. as the docs say, one tiny thing to remember is that MagickMock returns set default values for some preconfigured methods:</p>
+
+<pre><code>m = MagicMock()
+int(m) # 1
+</code></pre>
+
+<h5 id="toc_2">Patch:</h5>
+
+<p>Used as a context manager, it makes a specific context when your <strong>mock</strong>ed modules live. You'll need to use <a href="http://www.voidspace.org.uk/python/mock/patch.html">mock.patch()</a> when you want to mock modules in the classes you test. e.g.:</p>
+
+<pre><code>    with mock.patch('module.to.test.first_module') as first_mock:
+        with mock.patch('module.to.test.second_module') as second_mock:
+</code></pre>
+
+<p>If you are doing more than one, you can write is like this so your identations don't go crazy:</p>
+
+<pre><code>with mock.patch('module.to.test.first_module') as first_mock,\
+    mock.patch('module.to.test.second_module') as second_mock:
+</code></pre>
+
+<p>If you are mocking methods on modules, you can put them in the return value to save you some lines + style:</p>
+
+<pre><code>    with mock.patch('module.to.test.first_method', return_value='flickity flam'):
+</code></pre>
+
+<p>I've seen mainly the above in our test cases, but you can use <code>patch</code> as a decorator too, and mock the class as you go:</p>
+
+<pre><code>from mock import patch
+
+@patch('class_to_mock.the_method')
+def test_the_method(self, the_method)
+    the_method.return_value = 'awesome'
+</code></pre>
+</div>
+
+        <div class="more">
+          <a href="/pages" class="btn btn-small">read more..</a>
+        </div>
+      </div>
+      <div class="pages">
+        <h3 class="title"><a href="/pages/pages">Pages</a> <span class="date"></span></h3>
+
+        <div class="summary"><ul>
+  
+    <li><a href="/pages/about">._.</a></li>
+  
+  
+    <li><a href="/pages/archive">Archive</a></li>
+  
+  
+    <li><a href="/pages">Home</a></li>
+  
+    <li class="active"><a href="/pages/pages" class="active">Pages</a></li>
+  
+  
+  
+    <li><a href="/pages/tags">Tags</a></li>
+  
+</ul></div>
+
+        <div class="more">
+          <a href="/pages/pages" class="btn btn-small">read more..</a>
+        </div>
+      </div>
+      <div class="pages">
+        <h3 class="title"><a href="/pages/tags">Tags</a> <span class="date"></span></h3>
+
+        <div class="summary">
+<ul class="tag_box inline">
+  <li>
+    <a href="#design-ref">design <span>1</span></a>
+  </li>
+  <li>
+    <a href="#pjm-ref">pjm <span>1</span></a>
+  </li>
+  <li>
+    <a href="#coding-ref">coding <span>3</span></a>
+  </li>
+  <li>
+    <a href="#tech-support-ref">tech-support <span>1</span></a>
+  </li>
+  <li>
+    <a href="#work-ref">work <span>3</span></a>
+  </li>
+  <li>
+    <a href="#php-ref">php <span>1</span></a>
+  </li>
+  <li>
+    <a href="#python-ref">python <span>1</span></a>
+  </li>
+</ul>
+
+  <h3 id="design-ref">design</h3>
+    <li><a href="/but-not-simpler">But Not Simpler</a></li>
+  <h3 id="pjm-ref">pjm</h3>
+    <li><a href="/but-not-simpler">But Not Simpler</a></li>
+  <h3 id="coding-ref">coding</h3>
+    <li><a href="/but-not-simpler">But Not Simpler</a></li>
+    <li><a href="/php-iii-php-s-infernal-internal-">PHP III (PHP's Infernal Internal Index)</a></li>
+    <li><a href="/testing-with-mock-in-python">Testing with mock in Python</a></li>
+  <h3 id="tech-support-ref">tech-support</h3>
+    <li><a href="/but-not-simpler">But Not Simpler</a></li>
+  <h3 id="work-ref">work</h3>
+    <li><a href="/but-not-simpler">But Not Simpler</a></li>
+    <li><a href="/php-iii-php-s-infernal-internal-">PHP III (PHP's Infernal Internal Index)</a></li>
+    <li><a href="/testing-with-mock-in-python">Testing with mock in Python</a></li>
+  <h3 id="php-ref">php</h3>
+    <li><a href="/php-iii-php-s-infernal-internal-">PHP III (PHP's Infernal Internal Index)</a></li>
+  <h3 id="python-ref">python</h3>
+    <li><a href="/testing-with-mock-in-python">Testing with mock in Python</a></li>
+ 
+</div>
+
+        <div class="more">
+          <a href="/pages/tags" class="btn btn-small">read more..</a>
+        </div>
+      </div>
+    
+    <div class="pagination">
+      <ul>
+          <li class="active"><a href="/pages/index/1">1</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+      </div>
+
+      <hr>
+      <div class="footer">
+        <p>&copy; Issam 2015
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Google Prettify -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+<!-- end Google Prettify -->
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27394937-1']);
+  _gaq.push(['_trackPageview']);
+  
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+    
+  </body>
+</html>

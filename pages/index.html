@@ -1,0 +1,139 @@
+<div class="post">
+  <h3 class="title"><a href="/testing-with-mock-in-python">Testing with mock in Python</a> <span class="date">2015-02-23</span></h3>
+
+  <div class="summary ellipsis">
+<p>Mocking is pretty awesome in python, especially when using the <a href="http://www.voidspace.org.uk/python/mock/">Mock</a> library. It simplifies making stubs when testing, covers partial mocking, setting custom return values, how they were called, etc.</p>
+
+<p>However there are a few pitfalls when initially working with Mock. Some of these things are pretty obvious, but this is a quick reference for a few gotchas I found while mocking a few projects.</p>
+
+<h5 id="toc_0">
+<em>side_effect</em> vs <em>return_value</em>:</h5>
+
+<p>You'd only use <code>side_effect</code> if you want to test something that happens in a function instead of a return value. For example if you want to test exceptions that are raised in a method, use <code>side_effect</code>:</p>
+
+<pre><code>dork_mock = mock.Mock()
+dork_mock.some_method.side_effect = ZeroDivisionError
+dork_mock.some_method()
+
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+  File "build/bdist.linux-x86_64/egg/mock.py", line 955, in __call__
+  File "build/bdist.linux-x86_64/egg/mock.py", line 1010, in _mock_call
+ZeroDivisionError
+</code></pre>
+
+<h5 id="toc_1">When to use Mock vs. MagicMock</h5>
+
+<p>Basically with <a href="http://www.voidspace.org.uk/python/mock/magicmock.html#mock.MagicMock">MagicMock</a> you can mock magic methods. That's pretty much the only difference, otherwise you should use <code>Mock</code>. as the docs say, one tiny thing to remember is that MagickMock returns set default values for some preconfigured methods:</p>
+
+<pre><code>m = MagicMock()
+int(m) # 1
+</code></pre>
+
+<h5 id="toc_2">Patch:</h5>
+
+<p>Used as a context manager, it makes a specific context when your <strong>mock</strong>ed modules live. You'll need to use <a href="http://www.voidspace.org.uk/python/mock/patch.html">mock.patch()</a> when you want to mock modules in the classes you test. e.g.:</p>
+
+<pre><code>    with mock.patch('module.to.test.first_module') as first_mock:
+        with mock.patch('module.to.test.second_module') as second_mock:
+</code></pre>
+
+<p>If you are doing more than one, you can write is like this so your identations don't go crazy:</p>
+
+<pre><code>with mock.patch('module.to.test.first_module') as first_mock,\
+    mock.patch('module.to.test.second_module') as second_mock:
+</code></pre>
+
+<p>If you are mocking methods on modules, you can put them in the return value to save you some lines + style:</p>
+
+<pre><code>    with mock.patch('module.to.test.first_method', return_value='flickity flam'):
+</code></pre>
+
+<p>I've seen mainly the above in our test cases, but you can use <code>patch</code> as a decorator too, and mock the class as you go:</p>
+
+<pre><code>from mock import patch
+
+@patch('class_to_mock.the_method')
+def test_the_method(self, the_method)
+    the_method.return_value = 'awesome'
+</code></pre>
+</div>
+
+  <div class="more">
+    <a href="/testing-with-mock-in-python" class="btn btn-small">read more..</a>
+  </div>
+</div>
+<div class="post">
+  <h3 class="title"><a href="/php-iii-php-s-infernal-internal-">PHP III (PHP&#39;s Infernal Internal Index)</a> <span class="date">2015-02-04</span></h3>
+
+  <div class="summary">
+<p>Recently I was debugging some confounded PHP code, and came across an error when trying to get something back from an array:</p>
+
+<pre><code>$services = [array('service'=&gt;'Car Wash'),
+             array('service'=&gt;'Dork Library'),
+             array('service'=&gt;'Pet bnb')];
+
+foreach($services as $service_index =&gt; $service){
+    print_r($service);
+    // Remove any Car wash service
+    if($service['service'] == 'Car Wash'){
+        unset($services[$service_index]);
+    }
+}
+
+print_r($services[0]); // No output?!!?!?
+</code></pre>
+
+<p>Why doesn't <code>$services[0]</code> return anything?</p>
+
+<p>As someone who doesn't use php much, this was confusing. I assumed that if you <a href="http://php.net/manual/en/function.unset.php">destory the variable</a> here, then this means the next variable in line would of course be returned. But no, php has something much more devious, an internal array. Going through <a href="http://nikic.github.io/2012/03/28/Understanding-PHPs-internal-array-implementation.html">the details of this</a> can get to <em>O(</em>C language<em>)</em> intensity. Basically the resolution to this gotacha is using:</p>
+
+<pre><code>reset($services);   // Fixes the index on this array
+current($services); // Calls the item at the currently internal index,
+                    // defaults to the first index
+</code></pre>
+</div>
+
+  <div class="more">
+    <a href="/php-iii-php-s-infernal-internal-" class="btn btn-small">read more..</a>
+  </div>
+</div>
+<div class="post">
+  <h3 class="title"><a href="/but-not-simpler">But Not Simpler</a> <span class="date">2015-01-19</span></h3>
+
+  <div class="summary">
+<blockquote>
+<p>Everything Should Be Made as Simple as Possible, But Not Simpler</p>
+</blockquote>
+
+<p>As both a developer and support engineer this point frustrates me to no end, <em>simply</em> because people break this principle a lot. It comes up all the time when you work in software. <a href="https://www.princeton.edu/%7Eachaney/tmve/wiki100k/docs/KISS_principle.html">KISS</a>. Everyone agrees that ideally things best be clear, concise, understandable, scalable, ... <em>Simple</em>.</p>
+
+<p>Defining simplicity itself is hard. <a href="http://www.ted.com/talks/george_whitesides_toward_a_science_of_simplicity#t-104011">Watch this Ted Talk because it's awesome and way more entertaining than a dictionary</a>.</p>
+
+<p>What is simplicty when it comes to software?</p>
+
+<blockquote>
+<p>Everything Should Be Made as Simple as Possible</p>
+</blockquote>
+
+<p>However, the devil is in the details, so when you start throwing in tons of design patterns and hunky frameworks and all that stuff then you suffer. Because you have to take care of all of these things and it gets complicated.</p>
+
+<p>But it has to work the other way around too:</p>
+
+<blockquote>
+<p>but Not Simpler</p>
+</blockquote>
+
+<p>Because, as Mr. Whitesides wearing a black suit says, if things are too simple then the function of it is gone. It doesn't work anymore. We shouldn't forget who we're working for. The design should be independent from the implementation.</p>
+</div>
+
+  <div class="more">
+    <a href="/but-not-simpler" class="btn btn-small">read more..</a>
+  </div>
+</div>
+
+<div class="pagination">
+  <ul>
+      <li class="active"><a href="/posts/index/1">1</a></li>
+  </ul>
+</div>
