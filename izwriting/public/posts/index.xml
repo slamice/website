@@ -7,5 +7,12 @@
     <generator>Hugo -- 0.127.0</generator>
     <language>en-us</language>
     <atom:link href="https://issamzeibak.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Comparing 🐍 Task Runners 🏃🏃‍♀️</title>
+      <link>https://issamzeibak.me/posts/comparing-python-task-runners/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://issamzeibak.me/posts/comparing-python-task-runners/</guid>
+      <description>How asynchronous tasks work in Python Running the tasks, where did they go? </description>
+    </item>
   </channel>
 </rss>
