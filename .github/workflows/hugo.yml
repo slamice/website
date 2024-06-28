@@ -60,7 +60,7 @@ jobs:
           cd izwriting && hugo \
           --gc \
           --minify \
-          --baseURL "https://slamice.github.io/website/"        
+          --baseURL "https://slamice.github.io/"        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
