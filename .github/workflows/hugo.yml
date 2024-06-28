@@ -57,10 +57,10 @@ jobs:
           HUGO_ENV: production
           TZ: America/New_York
         run: |
-          hugo \
-            --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"          
+          cd izwriting && hugo \
+          --gc \
+          --minify \
+          --baseURL "https://slamice.github.io/website/"        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
