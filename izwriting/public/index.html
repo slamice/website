@@ -1,125 +1,443 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
-
+<html lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.127.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
-<title>IZ</title>
-
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/">
-<noscript>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer's Space</title>
     <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
+        body {
+            font-family: 'Times New Roman', Georgia, Garamond, serif;
+            background: #faf7f2;
+            color: #2c2c2c;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Subtle texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(0,0,0,0.02) 0%, transparent 30%),
+                radial-gradient(circle at 70% 60%, rgba(0,0,0,0.02) 0%, transparent 30%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.01) 0px, rgba(0,0,0,0.01) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(0, 0, 0, 0.02) inset;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Decorative line */
+        .ornament {
+            text-align: center;
+            color: #9b8b7a;
+            font-size: 1.2rem;
+            letter-spacing: 8px;
+            margin: 20px 0 10px;
+            opacity: 0.5;
+        }
+
+        .content {
+            padding: 60px 60px 50px;
+        }
+
+        @media (max-width: 700px) {
+            .content {
+                padding: 40px 30px 30px;
+            }
+        }
+
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .name {
+            font-size: 3.5rem;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #1a1a1a;
+            font-family: 'Times New Roman', serif;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .name::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #c4b5a0;
+            transition: width 0.4s ease;
+        }
+
+        .header:hover .name::after {
+            width: 100px;
+        }
+
+        .pronunciation {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            color: #8b7f72;
+            letter-spacing: 0.5px;
+            margin-top: 15px;
+        }
+
+        /* Writer's note / intro */
+        .intro {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin: 40px 0 50px;
+            align-items: start;
+        }
+
+        @media (max-width: 600px) {
+            .intro {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .image-frame {
+            position: relative;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1.1;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 
+                0 15px 35px -10px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(255,255,255,0.5) inset;
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #e8e1d8 0%, #d4ccc2 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* For actual image */
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.03);
+        }
+
+        .image-caption {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #8b7f72;
+            font-style: italic;
+            text-align: right;
+            letter-spacing: 0.3px;
+        }
+
+        .bio {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #3a3a3a;
+        }
+
+        .bio p {
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+        }
+
+        .bio p:first-child::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            padding-right: 10px;
+            line-height: 1;
+            color: #9b8b7a;
+            font-weight: 400;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .works {
+            margin: 50px 0 40px;
+        }
+
+        .works-title {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #9b8b7a;
+            margin-bottom: 25px;
+            font-weight: 400;
+            position: relative;
+            display: inline-block;
+        }
+
+        .works-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 30px;
+            height: 1px;
+            background: #c4b5a0;
+        }
+
+        .publications {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* Updated publication link styles */
+        .publication-link {
+            background: rgba(196, 181, 160, 0.1);
+            border: 1px solid rgba(196, 181, 160, 0.3);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: #5a4f45;
+            font-style: italic;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .publication-link:hover {
+            background: rgba(196, 181, 160, 0.2);
+            border-color: #9b8b7a;
+            transform: translateY(-2px);
+            color: #2c2c2c;
+            box-shadow: 0 4px 12px rgba(155, 139, 122, 0.15);
+        }
+
+        .publication-link:visited {
+            color: #6b5f54;
+        }
+
+        .publication-link:active {
+            transform: translateY(0);
+        }
+
+        .links-section {
+            margin-top: 50px;
+            border-top: 1px solid rgba(196, 181, 160, 0.3);
+            padding-top: 40px;
+        }
+
+        .links-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #9b8b7a;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .link-item {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid #e0d6cc;
+            border-radius: 40px;
+            color: #4a4a4a;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Georgia', serif;
+            backdrop-filter: blur(4px);
+        }
+
+        .link-item:hover {
+            background: #ffffff;
+            border-color: #9b8b7a;
+            color: #2c2c2c;
+            box-shadow: 0 8px 20px -10px rgba(155, 139, 122, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .link-item:visited {
+            color: #6b5f54;
+        }
+
+        .link-icon {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .link-item:hover .link-icon {
+            opacity: 1;
+        }
+
+        .quote {
+            margin: 40px 0 20px;
+            padding: 30px 0 10px;
+            text-align: center;
+            border-top: 1px dashed rgba(196, 181, 160, 0.3);
+        }
+
+        .quote-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #5a4f45;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Georgia', serif;
+            quotes: "“" "”" "‘" "’";
+        }
+
+        .quote-text::before {
+            content: "“";
+            font-size: 2.5rem;
+            color: #c4b5a0;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .quote-text::after {
+            content: "”";
+            font-size: 2.5rem;
+            color: #c4b5a0;
+            margin-left: 5px;
+            vertical-align: bottom;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #9b8b7a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Subtle hover effects */
+        .container {
+            transition: box-shadow 0.4s ease;
+        }
+
+        .container:hover {
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .bio {
+                font-size: 1rem;
+            }
+            
+            .link-item {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .publications {
+                justify-content: center;
+            }
+        }
     </style>
-</noscript>
 </head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="header">
+                <h1 class="name">IZ</h1>
+            </div>
 
-<body class="list" id="top">
+            <div class="intro">
+                <div class="image-frame">
+                    <div class="image-container">
+                        <div>    
+                            <img src="issam.jpg" alt="Issam Zeibak">
+                        </div>
+                    </div>
+                </div>
 
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="IZ (Alt + H)">IZ</a>
-            <div class="logo-switches">
+                <div class="bio">
+                    <p>Issam Zeibak is a Syrian American poet in Brooklyn whose work explores the Arab diaspora, identity and loss.</p>
+                    
+                    <p> He's been featured in New York City at The New York Arab Festival, Supa Dupa Fresh, Kan Ya Makan, Make Waves, and others.</p>
+                </div>
+            </div>
+
+            <div class="works">
+                <div class="publications">
+                    <a href="https://www.koukash.com/issue1" class="publication-link" target="_blank" rel="noopener noreferrer">& love still means whatever it means once it’s over and Third Culture Kid I (Fall 2022)</a>
+                    <p href="" class="publication-link" target="_blank" rel="noopener noreferrer">On Autism With My Son, Waiting for the Train - Yuvoice (Fall 2023)</p>
+                    <a href="https://midwayjournal.com/argument" class="publication-link" target="_blank" rel="noopener noreferrer">Argument - Midway Journal (Summer 2025)</a>
+                </div>
             </div>
         </div>
-        <ul id="menu">
-            <li>
-                <a href="http://localhost:1313/" title="🛖">
-                    <span class="active">🛖</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://localhost:1313/writing/" title="🖋️">
-                    <span>🖋️</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://localhost:1313/about/" title="📄">
-                    <span>📄</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main"> 
-    </main>
-    
-<footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/">IZ</a></span> · 
-
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
-    </svg>
-</a>
-
-<script>
-    let menu = document.getElementById('menu')
-    if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
-    };
-
-</script>
+    </div>
 </body>
-
 </html>
