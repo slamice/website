@@ -1,448 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writer's Space</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IZ · Issam Zeibak</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Times New Roman', Georgia, Garamond, serif;
-            background: #faf7f2;
-            color: #2c2c2c;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-        }
+    body {
+      font-family: 'Times New Roman', Georgia, Garamond, serif;
+      background: #faf7f2;
+      color: #2c2c2c;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
 
-        /* Subtle texture overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 30% 40%, rgba(0,0,0,0.02) 0%, transparent 30%),
-                radial-gradient(circle at 70% 60%, rgba(0,0,0,0.02) 0%, transparent 30%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.01) 0px, rgba(0,0,0,0.01) 2px, transparent 2px, transparent 8px);
-            pointer-events: none;
-            z-index: 0;
-        }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 30% 40%, rgba(0,0,0,0.02) 0%, transparent 30%),
+        radial-gradient(circle at 70% 60%, rgba(0,0,0,0.02) 0%, transparent 30%),
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.01) 0px, rgba(0,0,0,0.01) 2px, transparent 2px, transparent 8px);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .container {
-            max-width: 900px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.08),
-                0 0 0 1px rgba(0, 0, 0, 0.02) inset;
-            border-radius: 32px;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 1.2s ease;
-        }
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02) inset;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      transition: box-shadow 0.4s ease;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+    .container:hover {
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    }
 
-        /* Decorative line */
-        .ornament {
-            text-align: center;
-            color: #9b8b7a;
-            font-size: 1.2rem;
-            letter-spacing: 8px;
-            margin: 20px 0 10px;
-            opacity: 0.5;
-        }
+    .content {
+      padding: 50px 50px 50px;
+    }
 
-        .content {
-            padding: 60px 60px 50px;
-        }
+    @media (max-width: 700px) {
+      .content {
+        padding: 30px 20px 30px;
+      }
+    }
 
-        @media (max-width: 700px) {
-            .content {
-                padding: 40px 30px 30px;
-            }
-        }
+    .header {
+      margin-bottom: 35px;
+    }
 
-        .header {
-            margin-bottom: 50px;
-        }
+    .name {
+      font-size: 3.8rem;
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #1a1a1a;
+      font-family: 'Times New Roman', serif;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
 
-        .name {
-            font-size: 3.5rem;
-            font-weight: 400;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            color: #1a1a1a;
-            font-family: 'Times New Roman', serif;
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-        }
+    .pronunciation {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      color: #8b7f72;
+      letter-spacing: 0.5px;
+      margin-top: 12px;
+    }
 
-        .name::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: #c4b5a0;
-            transition: width 0.4s ease;
-        }
+    .split-layout {
+      display: flex;
+      gap: 50px;
+      margin: 30px 0 20px;
+      align-items: flex-start;
+    }
 
-        .header:hover .name::after {
-            width: 100px;
-        }
+    .image-col {
+      flex: 0 0 280px;
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+    }
 
-        .pronunciation {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 0.9rem;
-            color: #8b7f72;
-            letter-spacing: 0.5px;
-            margin-top: 15px;
-        }
+    .image-container {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.5) inset;
+    }
 
-        /* Writer's note / intro */
-        .intro {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin: 40px 0 50px;
-            align-items: start;
-        }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1.2s ease;
+    }
 
-        @media (max-width: 600px) {
-            .intro {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
+    .image-container:hover img {
+      transform: scale(1.03);
+    }
 
-        .image-frame {
-            position: relative;
-        }
+    .image-caption {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      color: #8b7f72;
+      font-style: italic;
+      text-align: right;
+      letter-spacing: 0.3px;
+    }
 
-        .image-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1.1;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 
-                0 15px 35px -10px rgba(0,0,0,0.15),
-                0 0 0 1px rgba(255,255,255,0.5) inset;
-        }
+    .publications-col {
+      flex: 1;
+      min-width: 0;
+    }
 
-        .placeholder-image {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(145deg, #e8e1d8 0%, #d4ccc2 100%);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .bio-short {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #3a3a3a;
+      margin-bottom: 30px;
+      font-family: 'Georgia', serif;
+    }
 
-        /* For actual image */
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1.2s ease;
-        }
+    .bio-short p {
+      margin-bottom: 18px;
+    }
 
-        .image-container:hover img {
-            transform: scale(1.03);
-        }
+    .bio-short p:first-child::first-letter {
+      font-size: 3.5rem;
+      float: left;
+      padding-right: 10px;
+      line-height: 1;
+      color: #9b8b7a;
+      font-weight: 400;
+      font-family: 'Times New Roman', serif;
+    }
 
-        .image-caption {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: #8b7f72;
-            font-style: italic;
-            text-align: right;
-            letter-spacing: 0.3px;
-        }
+    .bio-short a {
+      color: #9b8b7a;
+      text-decoration: none;
+      border-bottom: 1px dotted #c4b5a0;
+    }
 
-        .bio {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #3a3a3a;
-        }
+    .bio-short a:hover {
+      color: #6b5f54;
+    }
 
-        .bio p {
-            margin-bottom: 20px;
-            font-family: 'Georgia', serif;
-        }
+    .publications-scroll {
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      position: relative;
+      mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+    }
 
-        .bio p:first-child::first-letter {
-            font-size: 3.5rem;
-            float: left;
-            padding-right: 10px;
-            line-height: 1;
-            color: #9b8b7a;
-            font-weight: 400;
-            font-family: 'Times New Roman', serif;
-        }
+    .publications-scroll::-webkit-scrollbar {
+      display: none;
+    }
 
-        .bio p a {
-            color: #9b8b7a;
-        }
+    .genre-group {
+      margin-bottom: 28px;
+    }
 
-        .works {
-            margin: 50px 0 40px;
-        }
+    .genre-group:last-child {
+      margin-bottom: 0;
+    }
 
-        .works-title {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #9b8b7a;
-            margin-bottom: 25px;
-            font-weight: 400;
-            position: relative;
-            display: inline-block;
-        }
+    .genre-heading {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 3.5px;
+      color: #9b8b7a;
+      font-weight: 400;
+      margin-bottom: 4px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(196, 181, 160, 0.4);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
 
-        .works-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 30px;
-            height: 1px;
-            background: #c4b5a0;
-        }
+    .publication-list {
+      display: flex;
+      flex-direction: column;
+    }
 
-        .publications {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
-        }
+    .publication-link,
+    .publication-static {
+      display: block;
+      padding: 14px 0 14px 20px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196, 181, 160, 0.18);
+      position: relative;
+      transition: padding-left 0.25s ease;
+    }
 
-        /* Updated publication link styles */
-        .publication-link {
-            background: rgba(196, 181, 160, 0.1);
-            border: 1px solid rgba(196, 181, 160, 0.3);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            color: #5a4f45;
-            font-style: italic;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-        }
+    .publication-list > :last-child {
+      border-bottom: none;
+    }
 
-        .publication-link:hover {
-            background: rgba(196, 181, 160, 0.2);
-            border-color: #9b8b7a;
-            transform: translateY(-2px);
-            color: #2c2c2c;
-            box-shadow: 0 4px 12px rgba(155, 139, 122, 0.15);
-        }
+    .pub-title {
+      display: block;
+      font-size: 1.02rem;
+      color: #3f372f;
+      font-style: italic;
+      font-family: 'Georgia', serif;
+      line-height: 1.45;
+      margin-bottom: 5px;
+      transition: color 0.25s ease, font-weight 0.25s ease;
+    }
 
-        .publication-link:visited {
-            color: #6b5f54;
-        }
+    .pub-meta {
+      display: block;
+      font-size: 0.73rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: #9b8b7a;
+      line-height: 1.4;
+      font-weight: 400;
+      transition: color 0.25s ease, font-weight 0.25s ease;
+    }
 
-        .publication-link:active {
-            transform: translateY(0);
-        }
+    /* hover: text bolds + shifts right, no dash, no underline */
+    .publication-link:hover {
+      padding-left: 30px;
+    }
 
-        .links-section {
-            margin-top: 50px;
-            border-top: 1px solid rgba(196, 181, 160, 0.3);
-            padding-top: 40px;
-        }
+    .publication-link:hover .pub-title {
+      color: #8b6f4e;
+      font-weight: 600;
+    }
 
-        .links-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #9b8b7a;
-            margin-bottom: 25px;
-            font-weight: 400;
-        }
+    .publication-link:hover .pub-meta {
+      color: #7a6a58;
+      font-weight: 600;
+    }
 
-        .links-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+    .publication-static .pub-title {
+      color: #6b5f54;
+    }
 
-        .link-item {
-            padding: 10px 24px;
-            background: transparent;
-            border: 1px solid #e0d6cc;
-            border-radius: 40px;
-            color: #4a4a4a;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Georgia', serif;
-            backdrop-filter: blur(4px);
-        }
+    .publication-static .pub-meta {
+      color: #a89a8a;
+    }
 
-        .link-item:hover {
-            background: #ffffff;
-            border-color: #9b8b7a;
-            color: #2c2c2c;
-            box-shadow: 0 8px 20px -10px rgba(155, 139, 122, 0.3);
-            transform: translateY(-2px);
-        }
+    /* quote */
+    .quote {
+      margin: 40px 0 10px;
+      padding: 20px 0 10px;
+      text-align: center;
+      border-top: 1px dashed rgba(196, 181, 160, 0.3);
+    }
 
-        .link-item:visited {
-            color: #6b5f54;
-        }
+    .quote-text {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: #5a4f45;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: 'Georgia', serif;
+    }
 
-        .link-icon {
-            font-size: 1.2rem;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
+    .quote-text::before {
+      content: "“";
+      font-size: 2.5rem;
+      color: #c4b5a0;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
 
-        .link-item:hover .link-icon {
-            opacity: 1;
-        }
+    .quote-text::after {
+      content: "”";
+      font-size: 2.5rem;
+      color: #c4b5a0;
+      margin-left: 5px;
+      vertical-align: bottom;
+    }
 
-        .quote {
-            margin: 40px 0 20px;
-            padding: 30px 0 10px;
-            text-align: center;
-            border-top: 1px dashed rgba(196, 181, 160, 0.3);
-        }
+    .quote-author {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #9b8b7a;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
-        .quote-text {
-            font-size: 1.25rem;
-            font-style: italic;
-            color: #5a4f45;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto;
-            font-family: 'Georgia', serif;
-            quotes: "“" "”" "‘" "’";
-        }
+    @media (max-width: 850px) {
+      .split-layout {
+        flex-direction: column;
+        gap: 35px;
+      }
 
-        .quote-text::before {
-            content: "“";
-            font-size: 2.5rem;
-            color: #c4b5a0;
-            margin-right: 5px;
-            vertical-align: middle;
-        }
+      .image-col {
+        flex: 0 0 auto;
+        width: 70%;
+        max-width: 280px;
+        align-self: center;
+        position: static;
+      }
 
-        .quote-text::after {
-            content: "”";
-            font-size: 2.5rem;
-            color: #c4b5a0;
-            margin-left: 5px;
-            vertical-align: bottom;
-        }
+      .publications-scroll {
+        max-height: 380px;
+      }
+    }
 
-        .quote-author {
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: #9b8b7a;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+    @media (max-width: 500px) {
+      .name {
+        font-size: 2.8rem;
+      }
 
-        /* Subtle hover effects */
-        .container {
-            transition: box-shadow 0.4s ease;
-        }
+      .bio-short {
+        font-size: 1rem;
+      }
 
-        .container:hover {
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.12),
-                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-        }
+      .publication-link,
+      .publication-static {
+        padding: 12px 0 12px 16px;
+      }
 
-        /* Responsive adjustments */
-        @media (max-width: 500px) {
-            .name {
-                font-size: 2.5rem;
-            }
-            
-            .bio {
-                font-size: 1rem;
-            }
-            
-            .link-item {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .publications {
-                justify-content: center;
-            }
-        }
-    </style>
+      .pub-title {
+        font-size: 0.95rem;
+      }
+
+      .pub-meta {
+        font-size: 0.68rem;
+        letter-spacing: 1.2px;
+      }
+
+      .genre-heading {
+        font-size: 0.68rem;
+        letter-spacing: 3px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <div class="header">
-                <h1 class="name">IZ</h1>
-            </div>
+  <div class="container">
+    <div class="content">
+      <div class="header">
+        <h1 class="name">IZ</h1>
+        <div class="pronunciation">Issam Zeibak · poet</div>
+      </div>
 
-            <div class="intro">
-                <div class="image-frame">
-                    <div class="image-container">
-                        <!-- Replace this with your actual image -->
-                        <div>    
-                            <img src="issam.jpg" alt="Issam Zeibak">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bio">
-                    <p>Issam Zeibak is a Syrian American poet in Brooklyn whose work explores the Arab diaspora, identity and loss.</p>
-                    
-                    <p> He's read at New York City at <a href='https://www.newyorkarabfestival.com/'>The New York Arab Festival</a>, <a href='https://www.instagram.com/kan.yama.kan.bk/'>Kan Ya Makan</a>, Make Waves, and others.</p>
-                </div>
-            </div>
-
-            <div class="works">
-                <div class="publications">
-                    <a href="https://www.koukash.com/issue1" class="publication-link" target="_blank" rel="noopener noreferrer">& love still means whatever it means once it’s over and Third Culture Kid I (Fall 2022)</a>
-                    <p href="" class="publication-link" target="_blank" rel="noopener noreferrer">On Autism With My Son, Waiting for the Train - Yuvoice (Fall 2023)</p>
-                    <a href="https://midwayjournal.com/argument" class="publication-link" target="_blank" rel="noopener noreferrer">Argument - Midway Journal (Summer 2025)</a>
-                </div>
-            </div>
+      <div class="split-layout">
+        <div class="image-col">
+          <div class="image-container">
+            <img src="issam.jpg" alt="Issam Zeibak">
+          </div>
+          <div class="image-caption">Issam Zeibak, Brooklyn</div>
         </div>
+
+        <div class="publications-col">
+          <div class="bio-short">
+            <p>Issam Zeibak is a Syrian American poet in Brooklyn whose work explores the Arab diaspora, identity and loss.</p>
+            <p>He's read in New York City at <a href='https://www.newyorkarabfestival.com/'>The New York Arab Festival</a>, <a href='https://www.instagram.com/kan.yama.kan.bk/'>Kan Ya Makan</a>, Make Waves, and others.</p>
+          </div>
+
+          <div class="publications-scroll">
+
+            <div class="genre-group">
+              <div class="genre-heading">Poetry</div>
+              <div class="publication-list">
+
+                <a href="https://www.koukash.com/issue1" class="publication-link" target="_blank" rel="noopener noreferrer">
+                  <span class="pub-title">& love still means whatever it means once it’s over / Third Culture Kid I</span>
+                  <span class="pub-meta">Koukash Review · Fall 2022</span>
+                </a>
+
+                <p class="publication-static">
+                  <span class="pub-title">On Autism With My Son, Waiting for the Train</span>
+                  <span class="pub-meta">Yuvoice · Fall 2023</span>
+                </p>
+
+                <a href="https://midwayjournal.com/argument" class="publication-link" target="_blank" rel="noopener noreferrer">
+                  <span class="pub-title">Argument</span>
+                  <span class="pub-meta">Midway Journal · Summer 2025</span>
+                </a>
+
+                <p class="publication-static">
+                  <span class="pub-title">On Love</span>
+                  <span class="pub-meta">Chapbook</span>
+                </p>
+
+                <p class="publication-static">
+                  <span class="pub-title">Dogs of Zenica</span>
+                  <span class="pub-meta">Poetry</span>
+                </p>
+
+                <p class="publication-static">
+                  <span class="pub-title">Sea of Nowhere</span>
+                  <span class="pub-meta">Poetry</span>
+                </p>
+
+              </div>
+            </div>
+
+            <div class="genre-group">
+              <div class="genre-heading">Fiction</div>
+              <div class="publication-list">
+
+                <p class="publication-static">
+                  <span class="pub-title">Story 2</span>
+                  <span class="pub-meta">Fiction</span>
+                </p>
+
+              </div>
+            </div>
+
+            <div class="genre-group">
+              <div class="genre-heading">Essays</div>
+              <div class="publication-list">
+
+                <p class="publication-static">
+                  <span class="pub-title">Essay on God and Science</span>
+                  <span class="pub-meta">Essay</span>
+                </p>
+
+                <p class="publication-static">
+                  <span class="pub-title">Essay on Walking</span>
+                  <span class="pub-meta">Essay</span>
+                </p>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>
